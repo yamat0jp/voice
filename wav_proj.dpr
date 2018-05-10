@@ -86,7 +86,7 @@ begin
 end;
 
 var
-  sampRate, sampBits: SmallInt;
+  sampRate, sampBits: Word;
   posOfData, sizeOfData: Cardinal;
   i: integer;
 

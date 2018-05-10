@@ -7,7 +7,7 @@ uses
 
 {$INCLUDE spWave}
 function readFmtChank(fp: TFileStream; waveFmtPcm: tWaveFormatPcm): integer;
-function wavHdrRead(wavefile: PChar; var sampRate, sampBits: SmallInt;
+function wavHdrRead(wavefile: PChar; var sampRate, sampBits: Word;
   var posOfData, sizeOfData: Cardinal): integer;
 
 implementation
@@ -29,7 +29,7 @@ begin
   end;
 end;
 
-function wavHdrRead(wavefile: PChar; var sampRate, sampBits: SmallInt;
+function wavHdrRead(wavefile: PChar; var sampRate, sampBits: Word;
   var posOfData, sizeOfData: Cardinal): integer;
 var
   waveFileHeader: SWaveFileHeader;
