@@ -89,7 +89,7 @@ begin
         fp.Free;
         Exit;
       end;
-      sampRate := waveFmtPcm.sampleParSec;
+      sampRate := waveFmtPcm.samplePerSec;
       sampBits := waveFmtPcm.bitsPerSample;
     end
     else if CompareStr(chank.hdrFmtData, STR_data) = 0 then
