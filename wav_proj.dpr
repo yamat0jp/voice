@@ -7,7 +7,7 @@ uses
   System.SysUtils, System.Classes,
   wav in 'wav.pas';
 
-function dump8BitWav(fpIn: TFileStream; sizeOfData: SmallInt): integer;
+function dump8BitWav(fpIn: TFileStream; sizeOfData: Word): integer;
 var
   i: integer;
   s: Single;
@@ -29,7 +29,7 @@ begin
   end;
 end;
 
-function dump16BitWav(fpIn: TFileStream; sizeOfData: SmallInt): integer;
+function dump16BitWav(fpIn: TFileStream; sizeOfData: Word): integer;
 var
   i: integer;
   s: Single;
@@ -64,7 +64,7 @@ end;
 function dumpData(inFile: PChar; sampBits, posOfData, sizeOfData: Word)
   : SmallInt;
 var
-  bytesPerSingleCh: SmallInt;
+  bytesPerSingleCh: Word;
   fpIn: TFileStream;
 begin
   result := -1;
