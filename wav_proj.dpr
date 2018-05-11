@@ -11,7 +11,7 @@ function dump8BitWav(fpIn: TFileStream; sizeOfData: Word): integer;
 var
   i: integer;
   s: Single;
-  c: array [0 .. 1] of Word;
+  c: array [0 .. 1] of Byte;
 begin
   result := 0;
   i := 0;
@@ -33,7 +33,7 @@ function dump16BitWav(fpIn: TFileStream; sizeOfData: Word): integer;
 var
   i: integer;
   s: Single;
-  c: array [0 .. 1] of SmallInt;
+  c: array [0 .. 1] of ShortInt;
 begin
   result := 0;
   i := 0;
@@ -46,7 +46,7 @@ begin
       result := -1;
       break;
     end;
-    Writeln(c[0], ',', c[1]);
+    Writeln(c[0],',',c[1]);
     inc(i);
   end;
 end;
@@ -87,7 +87,7 @@ end;
 
 var
   sampRate, sampBits: Word;
-  posOfData, sizeOfData: Cardinal;
+  posOfData, sizeOfData: LongWord;
   i: integer;
 
 begin

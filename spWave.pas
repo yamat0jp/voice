@@ -14,8 +14,8 @@ type
   tWaveFormatPcm = record
     formatTag: Word;
     channels: Word;
-    samplePerSec: Cardinal;
-    bytesPerSec: Cardinal;
+    samplePerSec: LongWord;
+    bytesPerSec: LongWord;
     blockAlign: Word;
     bitsPerSample: Word;
   end;

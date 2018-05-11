@@ -19,7 +19,7 @@ begin
     fp.ReadBuffer(waveFmtPcm, SizeOf(tWaveFormatPcm));
     Writeln('データ形式：', waveFmtPcm.formatTag);
     Writeln('チャンネル数：', waveFmtPcm.channels);
-    Writeln('サンプリング周波数：', waveFmtPcm.sampleParSec);
+    Writeln('サンプリング周波数：', waveFmtPcm.samplePerSec);
     Writeln('バイト数　/　秒：', waveFmtPcm.bytesPerSec);
     Writeln('バイト数 Ｘチャンネル数：', waveFmtPcm.blockAlign);
     Writeln('ビット数　/　サンプル：', waveFmtPcm.bitsPerSample);
