@@ -61,7 +61,6 @@ function wavDataWrite(fpIn, fpOut: TFileStream; posOfData, sizeOfData: LongInt;
   bytesPerSingleCh: SmallInt): integer;
 begin
   fpIn.Position := posOfData;
-  fpOut.Position := posOfData;
   if bytesPerSingleCh = 1 then
     result := effect8BitWav(fpIn, fpOut, sizeOfData)
   else
