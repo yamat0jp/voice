@@ -17,13 +17,13 @@ var
 begin
   result := 0;
   i := 0;
-  s := sizeOfData / SizeOf(c);
+  s := sizeOfData / SizeOf(@c);
   while i < s do
   begin
     try
-      fpIn.ReadBuffer(c, SizeOf(c));
+      fpIn.ReadBuffer(c, SizeOf(@c));
       c[0] := 128;
-      fpOut.WriteBuffer(c, SizeOf(c));
+      fpOut.WriteBuffer(c, SizeOf(@c));
     except
       result := -1;
       break;
@@ -41,13 +41,13 @@ var
 begin
   result := 0;
   i := 0;
-  s := sizeOfData / SizeOf(c);
+  s := sizeOfData / SizeOf(@c);
   while i < s do
   begin
     try
-      fpIn.ReadBuffer(c, SizeOf(c));
+      fpIn.ReadBuffer(c, SizeOf(@c));
       c[0] := 0;
-      fpOut.WriteBuffer(c, SizeOf(c));
+      fpOut.WriteBuffer(c, SizeOf(@c));
     except
       result := -1;
       break;
