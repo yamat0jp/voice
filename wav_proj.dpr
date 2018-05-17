@@ -18,7 +18,7 @@ var
 begin
   try
     { TODO -oUser -cConsole メイン : ここにコードを記述してください }
-    if ParamCount <> 1 then
+    if ParamCount <> 2 then
     begin
       usage;
       Exit;
