@@ -24,9 +24,10 @@ begin
   result := 0;
   try
     s := TMemoryStream.Create;
-    s.ReadBuffer(sp.pWav^, sp.sizeOfData);
+    s.Write(sp.pWav^, sp.sizeOfData);
+    s.Position := 0;
+    s.Read(Pointer(pCpy)^,sp.sizeOfData);
     pMem := sp.pWav;
-    pCpy := s.Memory;
     i := sp.posOfData;
     k := 8 * sp.sizeOfData / sp.bitsPerSample;
     while i < k do
@@ -39,6 +40,8 @@ begin
   except
     result := -1;
   end;
+  s.Free;
+  Finalize(pCpy);
 end;
 
 function effect16BitWav(const sp: SpParam): integer;
