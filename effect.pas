@@ -44,8 +44,10 @@ begin
     s.Position := 0;
     s.Read(Pointer(pRes)^, s.Size);
     s.Free;
-    pMem := sp.pWav;
+    Pointer(pMem) := sp.pWav;
     k := (sp.sizeOfData - sp.posOfData) div sp.channels;
+    ma := 0.0;
+    p := pmin;
     for b := 0 to pmax - pmin - 1 do
     begin
       r[b] := 0.0;
@@ -59,8 +61,6 @@ begin
     end;
     while offset1 + 2 * pmax < len do
     begin
-      ma := 0.0;
-      p := pmin;
       for i := 0 to p do
       begin
         pCpy[offset1 + i] := pRes[offset0 + i];
