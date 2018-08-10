@@ -70,7 +70,10 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  MediaPlayer1.Play;
+  if FileExists(Edit1.Text) = true then
+    MediaPlayer1.Play
+  else
+    Edit1.Text:='';
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -116,9 +119,6 @@ end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
-  mic := TCaptureDeviceManager.Current.DefaultAudioCaptureDevice;
-  if mic = nil then
-    Exit;
   mic.fileName := 'temp.wav';
   mic.StartCapture;
   Edit1.Text:=mic.FileName;
@@ -139,6 +139,9 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Media := TMediaCodecManager.Create;
+  mic := TCaptureDeviceManager.Current.DefaultAudioCaptureDevice;
+  if mic = nil then
+    Showmessage('マイク入力デバイスが見つかりません');
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
