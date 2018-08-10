@@ -12,7 +12,7 @@ function effectwav(const sp: SpParam): integer;
 
 implementation
 
-uses Unit1;
+uses Unit2;
 
 function effect8BitWav(const sp: SpParam): integer;
 begin
@@ -115,7 +115,7 @@ function effectwav(const sp: SpParam): integer;
 begin
   if sp.channels = 1 then
   begin
-    Form1.ListBox1.Items.Add('ステレオファイルにしてください');
+    Form2.ListBox1.Items.Add('ステレオファイルにしてください');
     // result := -1;
   end;
   if sp.bitsPerSample = 8 then

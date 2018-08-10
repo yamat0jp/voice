@@ -51,12 +51,22 @@ object Form2: TForm2
     TabOrder = 2
     OnClick = Button1Click
   end
+  object ListBox1: TListBox
+    Left = 439
+    Top = 120
+    Width = 170
+    Height = 161
+    ItemHeight = 13
+    TabOrder = 3
+  end
   object OpenDialog1: TOpenDialog
     Filter = 'wav file|*.wav'
     Left = 528
     Top = 88
   end
   object SaveDialog1: TSaveDialog
+    DefaultExt = 'wav'
+    Filter = 'wav file|*.wav'
     Left = 528
     Top = 168
   end

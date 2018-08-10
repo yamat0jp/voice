@@ -16,6 +16,7 @@ type
     OpenDialog1: TOpenDialog;
     SaveDialog1: TSaveDialog;
     Button1: TButton;
+    ListBox1: TListBox;
     procedure SpeedButton1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure MediaPlayer1MouseEnter(Sender: TObject);
@@ -51,6 +52,7 @@ begin
     Edit1.Text := '';
     Exit;
   end;
+  MediaPlayer1.Close;
   if wavHdrRead(PChar(fileName), sp) < 0 then
     Exit;
   if readWav(fileName, pMem) = false then
@@ -59,12 +61,13 @@ begin
   if effectWav(sp) = 0 then
   begin
     pMem.SaveToFile('effect.wav');
-    MediaPlayer1.fileName := 'effect.wav';
-    MediaPlayer1.Play;
     if SaveDialog1.Execute = true then
     begin
       Edit1.Text := SaveDialog1.fileName;
       pMem.SaveToFile(Edit1.Text);
+      MediaPlayer1.fileName := Edit1.Text;
+      MediaPlayer1.Open;
+      MediaPlayer1.Play;
     end;
   end;
   pMem.Free;
@@ -83,6 +86,8 @@ end;
 
 procedure TForm2.MediaPlayer1MouseEnter(Sender: TObject);
 begin
+  if (Sender = MediaPlayer1)and(Edit1.Text = MEdiaPlayer1.FileName) then
+    Exit;
   if FileExists(Edit1.Text) = true then
     MediaPlayer1.fileName := Edit1.Text
   else
