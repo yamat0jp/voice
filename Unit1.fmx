@@ -18,6 +18,11 @@ object Form1: TForm1
     Size.PlatformDefault = False
     Text = 'test play'
     TabOrder = 20
+    object Label3: TLabel
+      Position.X = 16.000000000000000000
+      Position.Y = 32.000000000000000000
+      Text = 'target file'
+    end
   end
   object GroupBox2: TGroupBox
     Position.X = 24.000000000000000000
@@ -60,7 +65,7 @@ object Form1: TForm1
     Size.Height = 19.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 7
-    Value = 0.800000011920928900
+    Value = 0.800000011920929000
     OnChange = TrackBar1Change
   end
   object Label1: TLabel
@@ -133,5 +138,11 @@ object Form1: TForm1
     OnTimer = Timer1Timer
     Left = 344
     Top = 320
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '.wav'
+    Filter = '.wav'
+    Left = 624
+    Top = 200
   end
 end

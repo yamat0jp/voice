@@ -29,6 +29,8 @@ type
     GroupBox2: TGroupBox;
     Label2: TLabel;
     Timer1: TTimer;
+    Label3: TLabel;
+    SaveDialog1: TSaveDialog;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
@@ -80,17 +82,18 @@ procedure TForm1.Button4Click(Sender: TObject);
 begin
   if FileExists(Edit1.Text) = true then
     fileName := Edit1.Text
+  else if FileExists('temp.wav') = true then
+  begin
+    Edit1.Text := 'temp.wav';
+    fileName := Edit1.Text;
+  end
   else
-    if FileExists('temp.wav') = true then
-    begin
-      Edit1.Text := 'temp.wav';;
-      fileName := Edit1.Text;
-    end
-    else
-    begin
-      Edit1.Text:='';
-      Exit;
-    end;
+  begin
+    Edit1.Text := '';
+    Exit;
+  end;
+  if MediaPlayer1.Media <> nil then
+    MediaPlayer1.Clear;
   if wavHdrRead(PChar(fileName), sp) < 0 then
     Exit;
   if readWav(fileName, pMem) = false then
@@ -101,6 +104,11 @@ begin
     pMem.SaveToFile('effect.wav');
     MediaPlayer1.fileName := 'effect.wav';
     MediaPlayer1.Play;
+    if SaveDialog1.Execute = true then
+    begin
+      Edit1.Text := SaveDialog1.fileName;
+      pMem.SaveToFile(Edit1.Text);
+    end;
   end;
   pMem.Free;
   Finalize(sp.pWav^);
@@ -113,13 +121,14 @@ begin
     Exit;
   mic.fileName := 'temp.wav';
   mic.StartCapture;
+  Edit1.Text:=mic.FileName;
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
   if MediaPlayer1.State = TMediaState.Playing then
     MediaPlayer1.Stop
-  else
+  else if mic.State = TCaptureDeviceState.Capturing then
   begin
     mic.StopCapture;
     MediaPlayer1.fileName := 'temp.wav';
@@ -139,10 +148,11 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-  if (MediaPlayer1.State = TMediaState.Playing)and(MediaPlayer1.Duration = MediaPlayer1.CurrentTime) then
+  if (MediaPlayer1.State = TMediaState.Playing) and
+    (MediaPlayer1.Duration = MediaPlayer1.CurrentTime) then
   begin
     MediaPlayer1.Stop;
-    MediaPlayer1.CurrentTime:=0;
+    MediaPlayer1.CurrentTime := 0;
   end;
 end;
 
