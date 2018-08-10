@@ -3,9 +3,6 @@
         <ProjectGuid>{E06EA96E-1640-4BC7-8AFD-F0777E83E3EB}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="voice.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="changer.dproj">
             <Dependencies/>
         </Projects>
@@ -17,15 +14,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="voice">
-        <MSBuild Projects="voice.dproj"/>
-    </Target>
-    <Target Name="voice:Clean">
-        <MSBuild Projects="voice.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="voice:Make">
-        <MSBuild Projects="voice.dproj" Targets="Make"/>
-    </Target>
     <Target Name="changer">
         <MSBuild Projects="changer.dproj"/>
     </Target>
@@ -36,13 +24,13 @@
         <MSBuild Projects="changer.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="voice;changer"/>
+        <CallTarget Targets="changer"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="voice:Clean;changer:Clean"/>
+        <CallTarget Targets="changer:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="voice:Make;changer:Make"/>
+        <CallTarget Targets="changer:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

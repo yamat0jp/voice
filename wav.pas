@@ -19,31 +19,31 @@ begin
     fp.ReadBuffer(waveFmtPcm, SizeOf(tWaveFormatPcm));
     with Form2.ListBox1.Items do
     begin
-      Add('データ形式：'+waveFmtPcm.formatTag.ToString);
-      Add('チャンネル数：'+ waveFmtPcm.channels.ToString);
-      Add('サンプリング周波数：'+ waveFmtPcm.sampleParSec.ToString);
-      Add('バイト数　/　秒：'+ waveFmtPcm.bytesPerSec.ToString);
-      Add('バイト数 Ｘ チャンネル数：'+ waveFmtPcm.blockAlign.ToString);
-      Add('ビット数　/　サンプル：'+ waveFmtPcm.bitsPerSample.ToString);
+      Add('データ形式：' + waveFmtPcm.formatTag.ToString);
+      Add('チャンネル数：' + waveFmtPcm.channels.ToString);
+      Add('サンプリング周波数：' + waveFmtPcm.sampleParSec.ToString);
+      Add('バイト数　/　秒：' + waveFmtPcm.bytesPerSec.ToString);
+      Add('バイト数 Ｘ チャンネル数：' + waveFmtPcm.blockAlign.ToString);
+      Add('ビット数　/　サンプル：' + waveFmtPcm.bitsPerSample.ToString);
     end;
     with waveFmtPcm do
     begin
       if channels <> 2 then
       begin
         Form2.ListBox1.Items.Add('ステレオファイルを対象としています');
-        Form2.ListBox1.Items.Add('チャンネル数は'+channels.ToString);
-//        result := -1;
+        Form2.ListBox1.Items.Add('チャンネル数は' + channels.ToString);
+        // result := -1;
       end;
       if formatTag <> 1 then
       begin
         Form2.ListBox1.Items.Add('無圧縮のPCMのみ対象');
-        Form2.ListBox1.Items.Add('フォーマット形式は'+ formatTag.ToString);
+        Form2.ListBox1.Items.Add('フォーマット形式は' + formatTag.ToString);
         result := -1;
       end;
       if (bitsPerSample <> 8) and (bitsPerSample <> 16) then
       begin
         Form2.ListBox1.Items.Add('8/16ビットのみ対象');
-        Form2.ListBox1.Items.Add('bit/secは'+ bitsPerSample.ToString);
+        Form2.ListBox1.Items.Add('bit/secは' + bitsPerSample.ToString);
         result := -1;
       end;
     end;
@@ -107,7 +107,7 @@ begin
     if CompareStr(chank.hdrFmtData, STR_fmt) = 0 then
     begin
       len := chank.sizeOfFmtData;
-      Form2.ListBox1.Items.Add(Format('fmt の長さ%d[bytes]',[len]));
+      Form2.ListBox1.Items.Add(Format('fmt の長さ%d[bytes]', [len]));
       fPos := fp.Position;
       if readFmtChank(fp, waveFmtPcm) <> 0 then
       begin
@@ -124,7 +124,7 @@ begin
     else if CompareStr(chank.hdrFmtData, STR_data) = 0 then
     begin
       sp.sizeOfData := chank.sizeOfFmtData;
-      Form2.ListBox1.Items.Add(Format('dataの長さ:%d[bytes]',[sp.sizeOfData]));
+      Form2.ListBox1.Items.Add(Format('dataの長さ:%d[bytes]', [sp.sizeOfData]));
       sp.posOfData := fp.Position;
       fp.Seek(fPos + len, soFromBeginning);
       break;
@@ -132,7 +132,7 @@ begin
     else
     begin
       len := chank.sizeOfFmtData;
-      Form2.ListBox1.Items.Add(chank.hdrFmtData+'の長さ[bytes]'+len.ToString);
+      Form2.ListBox1.Items.Add(chank.hdrFmtData + 'の長さ[bytes]' + len.ToString);
       fPos := fp.Position;
       fp.Seek(len, soFromCurrent);
     end;

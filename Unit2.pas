@@ -68,6 +68,11 @@ begin
       MediaPlayer1.fileName := Edit1.Text;
       MediaPlayer1.Open;
       MediaPlayer1.Play;
+    end
+    else
+    begin
+      MediaPlayer1.fileName := Edit1.Text;
+      MediaPlayer1.Open;
     end;
   end;
   pMem.Free;
@@ -86,12 +91,12 @@ end;
 
 procedure TForm2.MediaPlayer1MouseEnter(Sender: TObject);
 begin
-  if (Sender = MediaPlayer1)and(Edit1.Text = MEdiaPlayer1.FileName) then
+  if (Sender = MediaPlayer1) and (Edit1.Text = MediaPlayer1.fileName) then
     Exit;
   if FileExists(Edit1.Text) = true then
     MediaPlayer1.fileName := Edit1.Text
   else
-    MediaPlayer1.FileName:='';
+    MediaPlayer1.fileName := '';
   MediaPlayer1.Open;
 end;
 
