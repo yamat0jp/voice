@@ -6,7 +6,8 @@ uses
   wav in 'wav.pas',
   spWav in 'spWav.pas',
   selectFile in 'selectFile.pas',
-  effect in 'effect.pas';
+  effect in 'effect.pas',
+  WriteHeader in 'WriteHeader.pas';
 
 {$R *.res}
 

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.MPlayer,
-  effect, selectFile, spWav, wav;
+  effect, selectFile, spWav, wav, WriteHeader;
 
 type
   TForm2 = class(TForm)
@@ -81,9 +81,25 @@ end;
 
 procedure TForm2.MediaPlayer1Click(Sender: TObject; Button: TMPBtnType;
   var DoDefault: Boolean);
+var
+  s: TFileStream;
 begin
   if Button = btRecord then
   begin
+    if FileExists('temp.wav') = false then
+    begin
+      sp.channels := 2;
+      sp.samplePerSec := 44100;
+      sp.bytesPerSec := 176400;
+      sp.sizeOfData := 0;
+      sp.bitsPerSample := 16;
+      s := TFileStream.Create('temp.wav', fmCreate);
+      try
+        waveHeaderWrite(s, sp);
+      finally
+        s.Free;
+      end;
+    end;
     MediaPlayer1.fileName := 'temp.wav';
     MediaPlayer1.Open;
   end;
