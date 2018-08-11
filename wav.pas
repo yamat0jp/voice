@@ -125,8 +125,8 @@ begin
     begin
       if chank.sizeOfFmtData = 0 then
       begin
-        fp.Position := fPos + len;
         sp.sizeOfData := fp.Size - fp.Position;
+        fp.Position := fPos + len;
         chank.sizeOfFmtData := sp.sizeOfData;
         fp.WriteBuffer(chank, SizeOf(tChank));
       end

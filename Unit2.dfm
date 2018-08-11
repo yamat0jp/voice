@@ -23,9 +23,9 @@ object Form2: TForm2
   object MediaPlayer1: TMediaPlayer
     Left = 136
     Top = 120
-    Width = 225
+    Width = 113
     Height = 30
-    VisibleButtons = [btPlay, btPause, btStop, btNext, btPrev, btStep, btBack, btRecord]
+    VisibleButtons = [btPlay, btPause, btStop, btRecord]
     AutoOpen = True
     DeviceType = dtWaveAudio
     DoubleBuffered = True
