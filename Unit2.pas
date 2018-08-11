@@ -29,6 +29,7 @@ type
     sp: SpParam;
     pMem: TMemoryStream;
     fileName: string;
+    tmep: string;
   end;
 
 var
@@ -86,34 +87,44 @@ var
 begin
   if Button = btRecord then
   begin
+    MediaPlayer1.fileName := 'temp.wav';
     if FileExists('temp.wav') = false then
     begin
-      sp.channels := 2;
-      sp.samplePerSec := 44100;
-      sp.bytesPerSec := 176400;
-      sp.sizeOfData := 0;
-      sp.bitsPerSample := 16;
-      s := TFileStream.Create('temp.wav', fmCreate);
+      sp.channels:=2;
+      sp.samplePerSec:=44100;
+      sp.bytesPerSec:=176400;
+      sp.bitsPerSample:=16;
+      sp.posOfData:=44;
+      sp.sizeOfData:=0;
+      s:=TFileStream.Create('temp.wav',fmCreate);
       try
-        waveHeaderWrite(s, sp);
+        waveHeaderWrite(s,sp);
       finally
         s.Free;
       end;
     end;
-    MediaPlayer1.fileName := 'temp.wav';
     MediaPlayer1.Open;
   end;
 end;
 
 procedure TForm2.MediaPlayer1MouseEnter(Sender: TObject);
 begin
-  if (Sender = MediaPlayer1) and (Edit1.Text = MediaPlayer1.fileName) then
-    Exit;
-  if FileExists(Edit1.Text) = true then
-    MediaPlayer1.fileName := Edit1.Text
-  else
-    MediaPlayer1.fileName := '';
-  MediaPlayer1.Open;
+  if MediaPlayer1.fileName <> 'temp.wav' then
+  begin
+    if FileExists(Edit1.Text) = false then
+    begin
+      Edit1.Text := '';
+      MediaPlayer1.FileName:='';
+      MediaPlayer1.Open;
+    end
+    else
+    begin
+      if ExpandFileName(Edit1.Text) <> ExpandFileName(MediaPlayer1.fileName)
+      then
+        MediaPlayer1.fileName := Edit1.Text;
+      MediaPlayer1.Open;
+    end;
+  end;
 end;
 
 procedure TForm2.SpeedButton1Click(Sender: TObject);

@@ -47,13 +47,13 @@ begin
     s.Read(Pointer(pRes)^, s.Size);
     s.Free;
     Pointer(pMem) := sp.pWav;
-    k := (sp.sizeOfData - sp.posOfData) div sp.channels;
+    k := sp.sizeOfData div sp.channels;
     ma := 0.0;
     p := pmin;
-    for b := 0 to pmax - pmin - 1 do
+    for b := pmin to pmax - 1 do
     begin
       r[b] := 0.0;
-      for a := sp.posOfData to sp.posOfData + temp_size do
+      for a := 0 to temp_size do
         r[b] := r[b] + pMem[a] * pMem[a + b];
       if r[b] > ma then
       begin

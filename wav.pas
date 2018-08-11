@@ -63,7 +63,7 @@ var
 begin
   Form2.ListBox1.Items.Clear;
   try
-    fp := TFileStream.Create(wavefile, fmOpenRead);
+    fp := TFileStream.Create(wavefile, fmOpenReadWrite);
     fp.ReadBuffer(waveFileHeader, SizeOf(SWaveFileHeader));
   except
     on EReadError do
@@ -123,10 +123,17 @@ begin
     end
     else if CompareStr(chank.hdrFmtData, STR_data) = 0 then
     begin
-      sp.sizeOfData := chank.sizeOfFmtData;
-      Form2.ListBox1.Items.Add(Format('data‚Ì’·‚³:%d[bytes]', [sp.sizeOfData]));
+      if chank.sizeOfFmtData = 0 then
+      begin
+        fp.Position := fPos + len;
+        sp.sizeOfData := fp.Size - fp.Position;
+        chank.sizeOfFmtData := sp.sizeOfData;
+        fp.WriteBuffer(chank, SizeOf(tChank));
+      end
+      else
+        sp.sizeOfData := chank.sizeOfFmtData;
       sp.posOfData := fp.Position;
-      fp.Seek(fPos + len, soFromBeginning);
+      Form2.ListBox1.Items.Add(Format('data‚Ì’·‚³:%d[bytes]', [sp.sizeOfData]));
       break;
     end
     else

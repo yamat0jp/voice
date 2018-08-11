@@ -5,8 +5,6 @@ interface
 uses System.Classes, System.SysUtils, spWav;
 
 function waveHeaderWrite(fp: TFileStream; const sp: SpParam): integer;
-function wavWrite(inFile, outFile: PChar; const wHdr: WrSWaveFileHeader;
-  var sp: SpParam): integer;
 
 implementation
 
