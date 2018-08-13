@@ -35,11 +35,4 @@ begin
   result := fp.Position;
 end;
 
-function wavDataWrite(fpIn, fpOut: TFileStream; const sp: SpParam): integer;
-var
-  pInMem, pOutMem: TMemoryStream;
-begin
-
-end;
-
 end.

@@ -90,6 +90,7 @@ begin
     MediaPlayer1.fileName := 'temp.wav';
     if FileExists('temp.wav') = false then
     begin
+    {
       sp.channels:=2;
       sp.samplePerSec:=44100;
       sp.bytesPerSec:=176400;
@@ -102,6 +103,7 @@ begin
       finally
         s.Free;
       end;
+      }
     end;
     MediaPlayer1.Open;
   end;
@@ -132,6 +134,7 @@ begin
   if OpenDialog1.Execute = true then
   begin
     Edit1.Text := OpenDialog1.fileName;
+    wavHdrRead(PChar(Edit1.Text),sp);
     MediaPlayer1MouseEnter(Sender);
   end;
 end;

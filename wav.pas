@@ -40,9 +40,9 @@ begin
         Form2.ListBox1.Items.Add('フォーマット形式は' + formatTag.ToString);
         result := -1;
       end;
-      if (bitsPerSample <> 8) and (bitsPerSample <> 16) then
+      if bitsPerSample <> 16 then
       begin
-        Form2.ListBox1.Items.Add('8/16ビットのみ対象');
+        Form2.ListBox1.Items.Add('16ビットのみ対象');
         Form2.ListBox1.Items.Add('bit/secは' + bitsPerSample.ToString);
         result := -1;
       end;

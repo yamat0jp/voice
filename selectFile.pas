@@ -13,7 +13,7 @@ uses Unit2;
 function readWav(const fName: string; out pMem: TMemoryStream): Boolean;
 var
   f: TFileStream;
-  sizeOfFile, length: integer;
+  sizeOfFile: integer;
 begin
   result := false;
   if FileExists(fName) = false then
