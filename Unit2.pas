@@ -6,8 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.MPlayer,
-  effect, selectFile, spWav, wav, WriteHeader, PythonEngine,
-  PythonGUIInputOutput;
+  effect, selectFile, spWav, wav, WriteHeader, PythonEngine;
 
 type
   TForm2 = class(TForm)
@@ -92,6 +91,7 @@ end;
 procedure TForm2.Button2Click(Sender: TObject);
 begin
   ListBox1.Items.Clear;
+  PythonEngine1.DllPath:=Edit2.Text;
   PythonEngine1.ExecStrings(Memo1.Lines);
 end;
 
