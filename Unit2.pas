@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.MPlayer,
-  effect, selectFile, spWav, wav, WriteHeader;
+  effect, selectFile, spWav, wav, WriteHeader, PythonEngine,
+  PythonGUIInputOutput;
 
 type
   TForm2 = class(TForm)
@@ -17,11 +18,19 @@ type
     SaveDialog1: TSaveDialog;
     Button1: TButton;
     ListBox1: TListBox;
+    PythonEngine1: TPythonEngine;
+    Memo1: TMemo;
+    Button2: TButton;
+    button3: TLabel;
+    Edit2: TEdit;
+    Label1: TLabel;
+    PythonInputOutput1: TPythonInputOutput;
     procedure SpeedButton1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure MediaPlayer1MouseEnter(Sender: TObject);
-    procedure MediaPlayer1Click(Sender: TObject; Button: TMPBtnType;
-      var DoDefault: Boolean);
+    procedure Button2Click(Sender: TObject);
+    procedure PythonInputOutput1SendData(Sender: TObject;
+      const Data: AnsiString);
   private
     { Private êÈåæ }
   public
@@ -80,33 +89,10 @@ begin
   Finalize(sp.pWav^);
 end;
 
-procedure TForm2.MediaPlayer1Click(Sender: TObject; Button: TMPBtnType;
-  var DoDefault: Boolean);
-var
-  s: TFileStream;
+procedure TForm2.Button2Click(Sender: TObject);
 begin
-  if Button = btRecord then
-  begin
-    MediaPlayer1.fileName := 'temp.wav';
-    if FileExists('temp.wav') = false then
-    begin
-    {
-      sp.channels:=2;
-      sp.samplePerSec:=44100;
-      sp.bytesPerSec:=176400;
-      sp.bitsPerSample:=16;
-      sp.posOfData:=44;
-      sp.sizeOfData:=0;
-      s:=TFileStream.Create('temp.wav',fmCreate);
-      try
-        waveHeaderWrite(s,sp);
-      finally
-        s.Free;
-      end;
-      }
-    end;
-    MediaPlayer1.Open;
-  end;
+  ListBox1.Items.Clear;
+  PythonEngine1.ExecStrings(Memo1.Lines);
 end;
 
 procedure TForm2.MediaPlayer1MouseEnter(Sender: TObject);
@@ -127,6 +113,12 @@ begin
       MediaPlayer1.Open;
     end;
   end;
+end;
+
+procedure TForm2.PythonInputOutput1SendData(Sender: TObject;
+  const Data: AnsiString);
+begin
+  ListBox1.Items.Add(Data);
 end;
 
 procedure TForm2.SpeedButton1Click(Sender: TObject);

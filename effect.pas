@@ -16,7 +16,7 @@ function effect16BitWav(const sp: SpParam): integer;
 const
   j = 24;
 var
-  i, a, b, pmin, pmax: integer;
+  i, k, a, b, pmin, pmax: integer;
   len, temp_size, offset0, offset1, p, q: integer;
   m, ma, pitch, rate: Single;
   pMem, pCpy, pRes: array of SmallInt;
@@ -75,8 +75,8 @@ begin
       inc(offset1, p + q);
     end;
     pitch := 1.5;
-    len := trunc(len / pitch);
-    for i := 0 to len - 1 do
+    k := trunc(len / pitch);
+    for i := 0 to k - 1 do
     begin
       m := pitch * i;
       q := trunc(m);
