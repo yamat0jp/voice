@@ -11,6 +11,7 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object SpeedButton1: TSpeedButton
@@ -74,13 +75,14 @@ object Form2: TForm2
     TabOrder = 3
   end
   object Memo1: TMemo
-    Left = 240
+    Left = 248
     Top = 178
     Width = 185
     Height = 89
     Lines.Strings = (
       'import pyaudio  #'#37682#38899#27231#33021#12434#20351#12358#12383#12417#12398#12521#12452#12502#12521#12522
       'import wave     #wav'#12501#12449#12452#12523#12434#25201#12358#12383#12417#12398#12521#12452#12502#12521#12522
+      'import voice'
       ''
       'RECORD_SECONDS = 10 #'#37682#38899#12377#12427#26178#38291#12398#38263#12373#65288#31186#65289
       'WAVE_OUTPUT_FILENAME = "temp.wav" #'#38899#22768#12434#20445#23384#12377#12427#12501#12449#12452#12523#21517
@@ -102,10 +104,11 @@ object Form2: TForm2
       ''
       'print ("recording...")'
       'frames = []'
-      'for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):'
-      '#while True:'
+      '#for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):'
+      'while not varname1.Value:'
       '    data = stream.read(CHUNK)'
       '    frames.append(data)'
+      '    voice.proc()'
       ''
       ''
       'print ("finished recording")'
@@ -131,7 +134,7 @@ object Form2: TForm2
     Top = 214
     Width = 75
     Height = 25
-    Caption = 'record'
+    Caption = 'record/Stop'
     TabOrder = 5
     OnClick = Button2Click
   end
@@ -146,7 +149,7 @@ object Form2: TForm2
   object OpenDialog1: TOpenDialog
     Filter = 'wav file|*.wav'
     Left = 528
-    Top = 88
+    Top = 112
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = 'wav'
@@ -166,5 +169,21 @@ object Form2: TForm2
     RawOutput = False
     Left = 432
     Top = 216
+  end
+  object PythonModule1: TPythonModule
+    Engine = PythonEngine1
+    OnInitialization = PythonModule1Initialization
+    ModuleName = 'voice'
+    Errors = <>
+    Left = 520
+    Top = 16
+  end
+  object PythonDelphiVar1: TPythonDelphiVar
+    Engine = PythonEngine1
+    Module = '__main__'
+    VarName = 'varname1'
+    OnGetData = PythonDelphiVar1GetData
+    Left = 520
+    Top = 64
   end
 end

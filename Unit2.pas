@@ -24,12 +24,17 @@ type
     Edit2: TEdit;
     Label1: TLabel;
     PythonInputOutput1: TPythonInputOutput;
+    PythonModule1: TPythonModule;
+    PythonDelphiVar1: TPythonDelphiVar;
     procedure SpeedButton1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure MediaPlayer1MouseEnter(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure PythonInputOutput1SendData(Sender: TObject;
       const Data: AnsiString);
+    procedure PythonModule1Initialization(Sender: TObject);
+    procedure PythonDelphiVar1GetData(Sender: TObject; var Data: Variant);
+    procedure FormCreate(Sender: TObject);
   private
     { Private êÈåæ }
   public
@@ -38,7 +43,10 @@ type
     pMem: TMemoryStream;
     fileName: string;
     tmep: string;
+    Terminate: Boolean;
   end;
+
+function voice_proc(self, args: PPyObject): PPyObject; cdecl;
 
 var
   Form2: TForm2;
@@ -46,6 +54,11 @@ var
 implementation
 
 {$R *.dfm}
+
+function voice_proc(self, args: PPyObject): PPyObject; cdecl;
+begin
+  Application.ProcessMessages;
+end;
 
 procedure TForm2.Button1Click(Sender: TObject);
 begin
@@ -90,9 +103,20 @@ end;
 
 procedure TForm2.Button2Click(Sender: TObject);
 begin
-  ListBox1.Items.Clear;
-  PythonEngine1.DllPath:=Edit2.Text;
-  PythonEngine1.ExecStrings(Memo1.Lines);
+  if Terminate = true then
+  begin
+    Terminate := false;
+    ListBox1.Items.Clear;
+    PythonEngine1.DllPath := Edit2.Text;
+    PythonEngine1.ExecStrings(Memo1.Lines);
+  end
+  else
+    Terminate:=true;
+end;
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  Terminate := true;
 end;
 
 procedure TForm2.MediaPlayer1MouseEnter(Sender: TObject);
@@ -102,7 +126,7 @@ begin
     if FileExists(Edit1.Text) = false then
     begin
       Edit1.Text := '';
-      MediaPlayer1.FileName:='';
+      MediaPlayer1.fileName := '';
       MediaPlayer1.Open;
     end
     else
@@ -115,10 +139,20 @@ begin
   end;
 end;
 
+procedure TForm2.PythonDelphiVar1GetData(Sender: TObject; var Data: Variant);
+begin
+  Data := Terminate;
+end;
+
 procedure TForm2.PythonInputOutput1SendData(Sender: TObject;
   const Data: AnsiString);
 begin
   ListBox1.Items.Add(Data);
+end;
+
+procedure TForm2.PythonModule1Initialization(Sender: TObject);
+begin
+  PythonModule1.AddMethod('proc', voice_proc, 'proc');
 end;
 
 procedure TForm2.SpeedButton1Click(Sender: TObject);
@@ -126,7 +160,7 @@ begin
   if OpenDialog1.Execute = true then
   begin
     Edit1.Text := OpenDialog1.fileName;
-    wavHdrRead(PChar(Edit1.Text),sp);
+    wavHdrRead(PChar(Edit1.Text), sp);
     MediaPlayer1MouseEnter(Sender);
   end;
 end;
