@@ -2,7 +2,7 @@ unit effect;
 
 interface
 
-uses System.Classes, System.SysUtils, Math, spWav;
+uses System.Classes, System.SysUtils, Vcl.Forms, Math, spWav;
 
 function effect16BitWav(const sp: SpParam): integer;
 function sinc(x: Single): Single;
@@ -16,23 +16,40 @@ function effect16BitWav(const sp: SpParam): integer;
 const
   j = 24;
 var
-  i, k, a, b, pmin, pmax: integer;
+  i, k, a, pmin, pmax: integer;
   len, temp_size, offset0, offset1, p, q: integer;
   m, ma, pitch, rate: Single;
   pMem, pCpy, pRes: array of SmallInt;
   s: TMemoryStream;
   r: array of Single;
+  procedure sub;
+  var
+    b, c: integer;
+  begin
+    for b := pmin to pmax - 1 do
+    begin
+      r[b] := 0.0;
+      for c := 0 to temp_size - 1 do
+        r[b] := r[b] + pRes[offset0 + c] * pRes[offset0 + c + b];
+      if r[b] > ma then
+      begin
+        ma := r[b];
+        p := b;
+      end;
+    end;
+  end;
+
 begin
   result := 0;
   try
-    temp_size := trunc(sp.samplePerSec * sp.bitsPerSample * sp.channels * 0.01);
-    pmin := trunc(sp.samplePerSec * sp.bitsPerSample * sp.channels * 0.005);
-    pmax := trunc(sp.samplePerSec * sp.bitsPerSample * sp.channels * 0.02);
-    SetLength(r, pmax - pmin);
     offset0 := 0;
     offset1 := 0;
     rate := 0.66;
     len := trunc(sp.sizeOfData - sp.posOfData / (rate * sp.channels));
+    temp_size := trunc(len * 0.01);
+    pmin := trunc(len * 0.005);
+    pmax := trunc(len * 0.02);
+    SetLength(r, pmax);
     SetLength(pCpy, len);
     SetLength(pRes, len);
     SetLength(pMem, len);
@@ -43,19 +60,12 @@ begin
     s.Free;
     ma := 0.0;
     p := pmin;
-    for b := 0 to pmax - pmin - 1 do
-    begin
-      r[b] := 0.0;
-      for a := 0 to temp_size do
-        r[b] := r[b] + pRes[a] * pRes[a + b];
-      if r[b] > ma then
-      begin
-        ma := r[b];
-        p := b;
-      end;
-    end;
+    if Form2.CheckBox1.Checked = false then
+      sub;
     while offset1 + 2 * pmax < len do
     begin
+      if Form2.CheckBox1.Checked = true then
+        sub;
       for i := 0 to p do
       begin
         pCpy[offset1 + i] := pRes[offset0 + i];
@@ -65,12 +75,14 @@ begin
       q := trunc(rate * p / (1.0 - rate) + 0.5);
       for i := p to q - 1 do
       begin
-        if offset1 + p + i >= len then
+        if offset0 + i >= len then
           break;
         pCpy[offset1 + p + i] := pRes[offset0 + i];
       end;
       inc(offset0, q);
       inc(offset1, p + q);
+      Application.ProcessMessages;
+      Form2.ProgressBar1.Position:=trunc(100*(offset1 + 2*pmax)/len);
     end;
     pitch := 1.5;
     k := trunc(len / pitch);
@@ -78,7 +90,7 @@ begin
     begin
       m := pitch * i;
       q := trunc(m);
-      for a := q - j div 2 to q + j div 2 do
+      for a := q - (j div 2) to q + (j div 2) do
         if (a >= 0) and (a < len) then
           pMem[i] := pCpy[a] + pRes[a] * trunc(sinc(pi * (m - a)))
         else
@@ -100,6 +112,7 @@ begin
   Finalize(pCpy);
   Finalize(pMem);
   Finalize(r);
+  Form2.ProgressBar1.Position:=0;
 end;
 
 function sinc(x: Single): Single;

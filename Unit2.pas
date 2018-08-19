@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.MPlayer,
-  effect, selectFile, spWav, wav, WriteHeader, PythonEngine;
+  effect, selectFile, spWav, wav, WriteHeader, PythonEngine, Vcl.ComCtrls;
 
 type
   TForm2 = class(TForm)
@@ -23,6 +23,8 @@ type
     PythonInputOutput1: TPythonInputOutput;
     PythonModule1: TPythonModule;
     PythonDelphiVar1: TPythonDelphiVar;
+    CheckBox1: TCheckBox;
+    ProgressBar1: TProgressBar;
     procedure SpeedButton1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure MediaPlayer1MouseEnter(Sender: TObject);

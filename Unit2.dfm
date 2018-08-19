@@ -59,7 +59,7 @@ object Form2: TForm2
     TabOrder = 3
   end
   object Memo1: TMemo
-    Left = 248
+    Left = 64
     Top = 178
     Width = 185
     Height = 89
@@ -121,6 +121,21 @@ object Form2: TForm2
     Caption = 'record/Stop'
     TabOrder = 5
     OnClick = Button2Click
+  end
+  object CheckBox1: TCheckBox
+    Left = 280
+    Top = 168
+    Width = 97
+    Height = 17
+    Caption = 'ExChanger'
+    TabOrder = 6
+  end
+  object ProgressBar1: TProgressBar
+    Left = 280
+    Top = 216
+    Width = 150
+    Height = 17
+    TabOrder = 7
   end
   object OpenDialog1: TOpenDialog
     Filter = 'wav file|*.wav'
