@@ -21,24 +21,9 @@ object Form2: TForm2
     Height = 23
     OnClick = SpeedButton1Click
   end
-  object button3: TLabel
-    Left = 34
-    Top = 245
-    Width = 139
-    Height = 26
-    Caption = 'pyaudio'#12391'10'#31186#38291#37682#38899#12375#12414#12377' '#27425#12395'GO'#12508#12479#12531#12434#12463#12522#12483#12463
-    WordWrap = True
-  end
-  object Label1: TLabel
-    Left = 34
-    Top = 159
-    Width = 79
-    Height = 13
-    Caption = 'python27.dll'#12497#12473
-  end
   object MediaPlayer1: TMediaPlayer
-    Left = 136
-    Top = 120
+    Left = 80
+    Top = 125
     Width = 85
     Height = 30
     VisibleButtons = [btPlay, btPause, btStop]
@@ -55,7 +40,6 @@ object Form2: TForm2
     Width = 369
     Height = 21
     TabOrder = 1
-    Text = 'Edit1'
   end
   object Button1: TButton
     Left = 320
@@ -130,21 +114,13 @@ object Form2: TForm2
     WordWrap = False
   end
   object Button2: TButton
-    Left = 64
-    Top = 214
+    Left = 184
+    Top = 125
     Width = 75
     Height = 25
     Caption = 'record/Stop'
     TabOrder = 5
     OnClick = Button2Click
-  end
-  object Edit2: TEdit
-    Left = 34
-    Top = 178
-    Width = 187
-    Height = 21
-    TabOrder = 6
-    Text = 'C:\Users\yamat\Anaconda2'
   end
   object OpenDialog1: TOpenDialog
     Filter = 'wav file|*.wav'

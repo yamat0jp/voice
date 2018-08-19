@@ -40,8 +40,6 @@ begin
     s.Write(sp.pWav^, sp.sizeOfData);
     s.Position := sp.posOfData;
     s.Read(Pointer(pRes)^, s.Size);
-    s.Position := sp.posOfData;
-    s.Read(Pointer(pCpy)^, s.Size);
     s.Free;
     ma := 0.0;
     p := pmin;

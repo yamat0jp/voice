@@ -20,9 +20,6 @@ type
     PythonEngine1: TPythonEngine;
     Memo1: TMemo;
     Button2: TButton;
-    button3: TLabel;
-    Edit2: TEdit;
-    Label1: TLabel;
     PythonInputOutput1: TPythonInputOutput;
     PythonModule1: TPythonModule;
     PythonDelphiVar1: TPythonDelphiVar;
@@ -107,7 +104,6 @@ begin
   begin
     Terminate := false;
     ListBox1.Items.Clear;
-    PythonEngine1.DllPath := Edit2.Text;
     PythonEngine1.ExecStrings(Memo1.Lines);
   end
   else

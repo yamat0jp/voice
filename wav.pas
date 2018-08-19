@@ -123,15 +123,7 @@ begin
     end
     else if CompareStr(chank.hdrFmtData, STR_data) = 0 then
     begin
-      if chank.sizeOfFmtData = 0 then
-      begin
-        sp.sizeOfData := fp.Size - fp.Position;
-        fp.Position := fPos + len;
-        chank.sizeOfFmtData := sp.sizeOfData;
-        fp.WriteBuffer(chank, SizeOf(tChank));
-      end
-      else
-        sp.sizeOfData := chank.sizeOfFmtData;
+      sp.sizeOfData := chank.sizeOfFmtData;
       sp.posOfData := fp.Position;
       Form2.ListBox1.Items.Add(Format('data‚Ì’·‚³:%d[bytes]', [sp.sizeOfData]));
       break;
