@@ -14,7 +14,7 @@ uses Unit2;
 
 function effect16BitWav(const sp: SpParam): integer;
 const
-  j = 24;
+  j = 2;
 var
   i, k, a, pmin, pmax: integer;
   len, temp_size, offset0, offset1, p, q: integer;
@@ -26,6 +26,8 @@ var
   var
     b, c: integer;
   begin
+    ma := 0.0;
+    p := pmin;
     for b := pmin to pmax - 1 do
     begin
       r[b] := 0.0;
@@ -47,8 +49,8 @@ begin
     rate := 0.66;
     len := trunc(sp.sizeOfData - sp.posOfData / (rate * sp.channels));
     temp_size := trunc(len * 0.01);
-    pmin := trunc(len * 0.005);
-    pmax := trunc(len * 0.02);
+    pmin := trunc(sp.samplePerSec * 0.005);
+    pmax := trunc(sp.samplePerSec * 0.02);
     SetLength(r, pmax);
     SetLength(pCpy, len);
     SetLength(pRes, len);
@@ -58,8 +60,6 @@ begin
     s.Position := sp.posOfData;
     s.Read(Pointer(pRes)^, s.Size);
     s.Free;
-    ma := 0.0;
-    p := pmin;
     if Form2.CheckBox1.Checked = false then
       sub;
     while offset1 + 2 * pmax < len do
@@ -82,7 +82,7 @@ begin
       inc(offset0, q);
       inc(offset1, p + q);
       Application.ProcessMessages;
-      Form2.ProgressBar1.Position:=trunc(100*(offset1 + 2*pmax)/len);
+      Form2.ProgressBar1.Position := trunc(100 * (offset1 + 2 * pmax) / len);
     end;
     pitch := 1.5;
     k := trunc(len / pitch);
@@ -112,7 +112,7 @@ begin
   Finalize(pCpy);
   Finalize(pMem);
   Finalize(r);
-  Form2.ProgressBar1.Position:=0;
+  Form2.ProgressBar1.Position := 0;
 end;
 
 function sinc(x: Single): Single;
